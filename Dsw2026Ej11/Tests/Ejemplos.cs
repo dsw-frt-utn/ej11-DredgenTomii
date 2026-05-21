@@ -1,5 +1,6 @@
 ﻿using Dsw2026Ej11.Collections;
 using Dsw2026Ej11.Domain;
+using System.Runtime.Intrinsics.X86;
 
 namespace Dsw2026Ej11.Tests;
 
@@ -106,19 +107,76 @@ internal class Ejemplos
         {
             Console.WriteLine("No existe");
         }
+
         Console.WriteLine("\n--- Eliminando legajo 215 ---");
         gestor.EliminarAlumno(215);
 
         Console.WriteLine("\n--- Lista Final ---");
         foreach (KeyValuePair<int, Alumno> par in gestor.ObtenerDicionario())
         {
-            Console.WriteLine($"Legajo: {par.Key} | Nombre:{par.Value.Nombre} ");
+            Console.WriteLine($"Legajo: {par.Key} | Nombre:{par.Value.Nombre}");
         }
     }
 
     //Realizar una llamada a cada método definido en CasoLinq y mostar por consola según corresponda
     public static void EjemploLinq()
     {
+        CasoLinq gestor = new CasoLinq();
+        
+        //*1.Obtener el primer libro(GetPrimero)
+        var primero = gestor.GetPrimero();
+        Console.WriteLine($"\nEl primer libro es: {primero.Id}-{primero.Titulo}");
 
+        //* 2.Obtener el último libro(GetUltimo)
+        var ultimo = gestor.GetUltimo();
+        Console.WriteLine($"\nEl ultimo libro es: {ultimo.Id}-{ultimo.Titulo}");
+        
+        //* 3.Obtener la suma de precios(GetTotalPrecios)
+        var total = gestor.GetTotalPrecios();
+        Console.WriteLine($"\nLa suma de los precios total es: {total}");
+        
+        //*4.Obtener el promedio de precios(GetPromedioPrecios)
+        var promedio = gestor.GetPromedioPrecios();
+        Console.WriteLine($"\nEl promedio de los precios es: {promedio}");
+
+        //*5.Obtener la lista de libros con Id mayor a 15(GetListById)
+        
+        Console.WriteLine($"\n-- Lista de libros con ID mayor a 15 --");
+        foreach (Libro lib in gestor.GetListById())
+        {
+            Console.WriteLine($"Id: {lib.Id} || Titulo: {lib.Titulo}");
+        }
+
+        //* 6.Obtener una lista de cada libro con su título y precio en formato moneda(GetLibros)(debe retornar una lista de string)
+        List<string> listaDeLibros = gestor.GetLibros();
+        Console.WriteLine($"\n-- Lista de libros --");
+        foreach (string textoLibro in listaDeLibros)
+        {
+            Console.WriteLine(textoLibro);
+        }
+
+        //* 7.Obtener el libro con el precio más alto(GetMayorPrecio)
+        var libMay = gestor.GetMayorPrecio();
+        Console.WriteLine($"\nEl libro con precio mas alto: {libMay.Titulo}-{libMay.Precio}");
+
+        //* 8.Obtener el libro con el precio más bajo(GetMenorPrecio)
+        var libMen = gestor.GetMenorPrecio();
+        Console.WriteLine($"\nEl libro con precio mas bajo: {libMen.Titulo}-{libMen.Precio}");
+      
+        //* 9.Obtener los libros cuyo precio sea mayor al promedio(GetMayorPromedio)
+        Console.WriteLine($"\n-- Lista de libros con precios mayor al promedio --");
+        List<Libro> listaPromedio = gestor.GetMayorPromedio();
+        foreach(Libro lib in listaPromedio)
+        {
+            Console.WriteLine($"{lib.Id} || {lib.Precio}");
+        }
+
+        //*10.Obtener los libros ordenados por título de forma descendente
+        Console.WriteLine($"\n-- Lista de libros ordenados de forma descendente --");
+        List<Libro> listaDescendente = gestor.GetListaOrdenada();
+        foreach (Libro lib in listaDescendente)
+        {
+            Console.WriteLine($"{lib.Titulo}");
+        }
     }
 }
