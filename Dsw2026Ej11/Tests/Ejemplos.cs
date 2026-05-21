@@ -39,7 +39,7 @@ internal class Ejemplos
 
         Console.WriteLine("\n--- Buscando a Juan ---");
         Alumno noEncontrado = gestor.BuscarAlumnoPorNombre("Juan");
-        if (noEncontrado == null) 
+        if (noEncontrado == null)
         {
             Console.WriteLine("No existe");
         }
@@ -67,7 +67,53 @@ internal class Ejemplos
     //Eliminar un alumno por clave y listar por consola los alumnos
     public static void EjemploDictionary()
     {
+        CasoDictionary gestor = new CasoDictionary();
 
+        Alumno alumno1 = new Alumno(213, "Francisco", 7.5);
+        Alumno alumno2 = new Alumno(214, "Gonzales", 6.5);
+        Alumno alumno3 = new Alumno(215, "Agustin", 9.3);
+
+        gestor.AgregarAlumno(213, alumno1);
+        gestor.AgregarAlumno(214, alumno2);
+        gestor.AgregarAlumno(215, alumno3);
+
+        Console.WriteLine("--- Lista de Alumnos Inicial ---");
+        foreach (KeyValuePair<int, Alumno> par in gestor.ObtenerDicionario())
+        {
+            Console.WriteLine($"Legajo: {par.Key} | Nombre:{par.Value.Nombre} ");
+        }
+
+        Console.WriteLine("\n--- Buscando legajo 213 ---");
+        Alumno buscado = gestor.BuscarAlumno(213);
+
+        if (buscado != null)
+        {
+            Console.WriteLine($"El alumno es: {buscado.Nombre}");
+        }
+        else
+        {
+            Console.WriteLine("No existe");
+        }
+
+        Console.WriteLine("\n--- Buscando Legajo 255---");
+        Alumno noEncontrado = gestor.BuscarAlumno(255);
+
+        if (noEncontrado != null)
+        {
+            Console.WriteLine($"El alumno es: {noEncontrado.Nombre}");
+        }
+        else
+        {
+            Console.WriteLine("No existe");
+        }
+        Console.WriteLine("\n--- Eliminando legajo 215 ---");
+        gestor.EliminarAlumno(215);
+
+        Console.WriteLine("\n--- Lista Final ---");
+        foreach (KeyValuePair<int, Alumno> par in gestor.ObtenerDicionario())
+        {
+            Console.WriteLine($"Legajo: {par.Key} | Nombre:{par.Value.Nombre} ");
+        }
     }
 
     //Realizar una llamada a cada método definido en CasoLinq y mostar por consola según corresponda
